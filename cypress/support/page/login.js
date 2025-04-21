@@ -1,11 +1,11 @@
 
 export default class LoginPage {
 
-    username = (your_username) => 
-        cy.get('[data-test="username"]').type(your_username)
+    username = (username) => 
+        cy.get('[data-test="username"]').type(username)
     
-    password = (your_password) =>
-        cy.get('input[name="password"]').type(your_password)
+    password = (password) =>
+        cy.get('input[name="password"]').type(password)
 
     loginButton = () =>
         cy.get('[data-test="login-button"]').click()
