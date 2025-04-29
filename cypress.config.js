@@ -2,6 +2,7 @@ import { defineConfig } from "cypress";
 
 export default defineConfig({
   reporter: 'mochawesome',
+  experimentalStudio: true,
   reporterOptions: {
     reportDir: 'cypress/reports', // Lokasi penyimpanan laporan
     overwrite: false, // Jangan timpa laporan lama
