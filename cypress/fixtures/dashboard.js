@@ -25,6 +25,14 @@ Product_name: [
     "Sauce Labs Fleece Jacket",
     "Sauce Labs Onesie",
     "Test.allTheThings() T-Shirt (Red)",
-]
+],
+CheckOut: {
+    FirstName: "Feby",
+    LastName: "Rizvi",
+    ZipCode: "68131",
+},
+thank_you_for_order: 
+    `Thank you for your order!`
+
 
 }

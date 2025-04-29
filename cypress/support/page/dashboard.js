@@ -27,13 +27,34 @@ export default class DashboardPage {
   get jaketFleece() {
     return cy.get('[data-test="inventory-item-sauce-labs-fleece-jacket-img"]')
   }
-
   dashboardAssertion(expectedText) {
     return cy.contains(expectedText);
   }
-
   img (sauceLabs) {
     return cy.get(`[data-test="inventory-item-sauce-labs-${sauceLabs}-img"]`)
+  }
+
+  get filter() {
+    return cy.get('[data-test="product-sort-container"]')
+  }
+
+  get listCart() {
+    return cy.get('[data-test="inventory-item"]')
+  }
+
+  get checkout() {
+    return cy.get('[data-test="checkout"]')
+  }
+
+  get continueButton() {
+    return cy.get('[data-test="continue"]')
+  }
+
+  get finishButton() {
+    return cy.get('[data-test="finish"]')
+  }
+  get backHome() {
+    return cy.get('[data-test="back-to-products"]')
   }
 } length;
 

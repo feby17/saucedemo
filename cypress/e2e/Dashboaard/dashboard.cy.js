@@ -1,7 +1,7 @@
 import { Page } from "../../support/page";
 import { login } from "../../support/helper/login";
 import { dashboardAssertion } from "../../fixtures/dashboard";
-// import 'cypress-real-events/support';
+import { fillForm } from "../../support/helper/login";
 
 
 const product = ["backpack","bike-light","bolt-t-shirt","fleece-jacket","onesie"]
@@ -31,7 +31,7 @@ describe('Dashboard', () => {
         Page.dashboard.jaketFleece.click()
         Page.dashboard.dashboardAssertion(dashboardAssertion.detail).should('be.visible')
         })
-    it('Navigasi ke halaman detail produk', () => {
+    it('Semua informasi produk tampil', () => {
         product.forEach((prod) => {
             Page.dashboard.img(prod).should('be.visible');
         });
@@ -52,55 +52,35 @@ describe('Dashboard', () => {
     it ('Klik Add–Remove cepat berkali-kali', () => {
         
         for (let i = 0; i < 30; i++) {
-        Page.dashboard.addToCartSauceLabs(product[0]).click();
-        Page.dashboard.removeButton(product[0]).click()
+            Page.dashboard.addToCartSauceLabs(product[0]).click();
+            Page.dashboard.removeButton(product[0]).click()
         }
     })
-    // it.only ('Gambar produk gagal dimuat', () => {
-    //     Page.dashboard.burgerMenu.click()
-    //     Page.dashboard.logout.click()
-    //     cy.visit('/inventory.html',{ failOnStatusCode: false })
-    //     })
-    // it.only ('Klik Add to cart tanpa data', () => {
-    //     Page.dashboard.burgerMenu.click()
-    //     Page.dashboard.logout.click()
-    //     cy.visit('/inventory.html',{ failOnStatusCode: false })
-    //     })
-    // it.only ('Filter produk berdasarkan harga (High to Low)', () => {
-    //     Page.dashboard.burgerMenu.click()
-    //     Page.dashboard.logout.click()
-    //     cy.visit('/inventory.html',{ failOnStatusCode: false })
-    //     })
-    // it.only ('Filter produk berdasarkan harga (Low to High)', () => {
-    //     Page.dashboard.burgerMenu.click()
-    //     Page.dashboard.logout.click()
-    //     cy.visit('/inventory.html',{ failOnStatusCode: false })
-    //     })
-    // it.only ('Filter produk berdasarkan nama (Z to A)', () => {
-    //     Page.dashboard.burgerMenu.click()
-    //     Page.dashboard.logout.click()
-    //     cy.visit('/inventory.html',{ failOnStatusCode: false })
-    //     })
-    // it.only ('Filter produk berdasarkan nama (A to Z)', () => {
-    //     Page.dashboard.burgerMenu.click()
-    //     Page.dashboard.logout.click()
-    //     cy.visit('/inventory.html',{ failOnStatusCode: false })
-    //     })
-    // it.only ('Reset filter ke default', () => {
-    //     Page.dashboard.burgerMenu.click()
-    //     Page.dashboard.logout.click()
-    //     cy.visit('/inventory.html',{ failOnStatusCode: false })
-    //     })
-    // it.only ('Halaman Cart Kosong', () => {
-    //     Page.dashboard.burgerMenu.click()
-    //     Page.dashboard.logout.click()
-    //     cy.visit('/inventory.html',{ failOnStatusCode: false })
-    //     })
-    // it.only ('Akses Halaman Checkout sampai menyelesaikan checkout', () => {
-    //     Page.dashboard.burgerMenu.click()
-    //     Page.dashboard.logout.click()
-    //     cy.visit('/inventory.html',{ failOnStatusCode: false })
-    //     })
+    it ('Filter produk berdasarkan ((A to Z), (Z to A), (low to high), (high to low)) lalu Reset filter ke default', () => {
+        Page.dashboard.filter.select('az')
+        Page.dashboard.filter.select('za')
+        Page.dashboard.filter.select('hilo')
+        Page.dashboard.filter.select('lohi')
+        cy.reload()
+        })
+    it ('Halaman Cart Kosong', () => {
+        Page.dashboard.shoppingCart.click()
+        Page.dashboard.listCart.should('not.exist')
+        })
+    it ('Akses Halaman Checkout sampai menyelesaikan checkout', () => {
+        Page.dashboard.addToCartSauceLabs(product[0]).click();
+        Page.dashboard.shoppingCart.click();
+        Page.dashboard.checkout.click()
+        fillForm(
+            dashboardAssertion.CheckOut.FirstName,
+            dashboardAssertion.CheckOut.LastName,
+            dashboardAssertion.CheckOut.ZipCode
+          ); 
+        Page.dashboard.continueButton.click() 
+        Page.dashboard.finishButton.click()
+        cy.contains(dashboardAssertion.thank_you_for_order).should('be.visible').wait(1000)
+        Page.dashboard.backHome.click()
+    })
 })
 
 
